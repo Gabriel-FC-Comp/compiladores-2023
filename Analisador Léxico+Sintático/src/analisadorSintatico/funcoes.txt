@@ -1,0 +1,120 @@
+public void programa(){
+		match(TipoToken.Delim);
+		match(TipoToken.PCDec);
+		listaDeclaracoes();
+		match(TipoToken.Delim);
+		match(TipoToken.PCProg);
+		listaComandos();
+	}
+
+	public void listaDeclaracoes(){
+		declaracao();
+		outrasDeclaracoes();
+	}
+
+	public void declaracao(){
+		match(TipoToken.Var);
+		match(TipoToken.Delim);
+		tipoVar();
+	}
+
+	public void tipoVar(){
+		if(fluxoTokens.get(indiceTokens) == TipoToken.PCInt){
+			match(TipoToken.PCInt);
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.PCReal){
+			match(TipoToken.PCReal);
+		} else {
+			System.err.println("Erro Sintático - Linha" + mapaTokenLinha.get(indiceTokens-1) + " - " + " Esperado Tipo de Variável");
+            System.exit(1);
+		}
+	}
+
+	public void outrasDeclaracoes(){
+		if(fluxoTokens.get(indiceTokens) == TipoToken.Var){
+			listaDeclaracoes();
+		}
+	}
+
+	public void listaComandos(){
+		comando();
+	}
+
+	public void comando(){
+		if(fluxoTokens.get(indiceTokens) == TipoToken.Var){
+			comandoAtrib();
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.PCLer){
+			comandoEnt();
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.PCImprimir){
+			comandoSai();
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.PCSe){
+			comandoCond();
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.PCEnqto){
+			comandoRep();
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.PCIni){
+			subComan();
+		} else { 
+			System.err.println("Erro Sintático - Linha" + mapaTokenLinha.get(indiceTokens-1) + " - " + " Esperado Algum Comando");
+            System.exit(1);
+		}
+	}
+
+	public void comandoAtrib(){
+		match(TipoToken.Var);
+		match(TipoToken.Atrib);
+		expressaoAritmetica();
+	}
+
+	public void comandoEnt(){
+		match(TipoToken.PCLer);
+		match(TipoToken.Var);
+	}
+
+	public void comandoSai(){
+		match(TipoToken.PCImprimir);
+		tipoSaida();
+	}
+
+	public void tipoSaida(){
+		if(fluxoTokens.get(indiceTokens) == TipoToken.Var){
+			match(TipoToken.Var);
+		} else if(fluxoTokens.get(indiceTokens) == TipoToken.Cadeia){
+			match(TipoToken.Cadeia);
+		} else {
+			System.err.println("Erro Sintático - Linha" + mapaTokenLinha.get(indiceTokens-1) + " - " + " Esperado Variavel ou Cadeia");
+            System.exit(1);
+		}
+	}
+
+	public void comandoCond(){
+		match(TipoToken.PCSe);
+		expressaoRelacional();
+		match(TipoToken.PCEntao);
+		comando();
+		if(fluxoTokens.get(indiceTokens) == TipoToken.PCSenao){
+			contraCondicao();
+		}
+	}
+
+
+	public void contraCondicao(){
+		match(TipoToken.PCSenao);
+		comando();
+	}
+
+	public void comandoRep(){
+		match(TipoToken.PCEnqto);
+		expressaoRelacional();
+		comando();
+	}
+
+	public void subComan(){
+		match(TipoToken.PCIni);
+		listaComandos();
+		match(TipoToken.PCFim);
+	}
+
+	public void outrosComandos(){
+		if(fluxoTokens.get(indiceTokens) == TipoToken.Var || fluxoTokens.get(indiceTokens) == TipoToken.PCLer || fluxoTokens.get(indiceTokens) == TipoToken.PCImprimir || fluxoTokens.get(indiceTokens) == TipoToken.PCSe || fluxoTokens.get(indiceTokens) == TipoToken.PCEnqto || fluxoTokens.get(indiceTokens) == TipoToken.PCIni){
+			listaComandos();
+		}
+	}

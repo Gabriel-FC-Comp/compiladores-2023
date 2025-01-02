@@ -1,0 +1,3 @@
+# Analisador Léxico + Sintático - Disciplina de Compiladores
+
+Como requisito parcial de avaliação da disciplina de Compiladores, fora solicitado a criação manual (ad hoc) de um Analisador Léxico e um Analisador Sintático para realizar a transpilação de um arquivo escrito na linguagem fictícia denominada "Gyh" fornecida pela Tamara Angélica Baldo, Baseada na linguagem ALGUMA proposta pelo prof Daniel Lucrédio (UFSCar)
