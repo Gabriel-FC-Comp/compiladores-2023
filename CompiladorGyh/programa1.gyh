@@ -1,0 +1,25 @@
+:DEC
+parametro:INT
+fatorial:INT
+teste:REAL
+# Testando comentarios #####
+
+:PROG 
+LER parametro
+teste := 35.12345678
+fatorial := 1
+SE parametro == 0 ENTAO 
+INI
+    fatorial := 1
+    SE parametro == 1 ENTAO
+        fatorial := 2
+    SENAO IMPRIMIR fatorial
+FIM
+
+ENQTO parametro > 1
+INI
+fatorial := fatorial * (parametro - 1) 
+parametro := parametro - 1
+FIM
+IMPRIMIR fatorial
+IMPRIMIR "Oi"

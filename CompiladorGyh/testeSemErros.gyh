@@ -1,0 +1,26 @@
+:DEC
+
+fatorial : INT
+numFatorial : INT
+aliasNumFatorial : INT
+
+:PROG
+
+INI
+
+	IMPRIMIR "Insira um valor para calcular o fatorial: "
+	LER numFatorial
+	
+        fatorial := 1
+	aliasNumFatorial := numFatorial	
+
+	ENQTO aliasNumFatorial > 1
+	INI
+		fatorial := fatorial * aliasNumFatorial
+		aliasNumFatorial := aliasNumFatorial - 1
+	FIM
+	
+	IMPRIMIR "Fatorial calculado: "
+	IMPRIMIR fatorial
+
+FIM
